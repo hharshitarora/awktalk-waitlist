@@ -803,9 +803,12 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        name: name,
-                        email: email,
-                        useCase: useCase
+                        fields: {
+                            'Full Name': name,
+                            'Email': email,
+                            'Use Case': useCase,
+                            'Submission Date': new Date().toISOString()
+                        }
                     })
                 })
                 .then(response => {
