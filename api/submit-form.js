@@ -15,13 +15,22 @@ export default async function handler(req, res) {
     const useCase = fields['Use Case'] || fields.useCase || '';
     
     // Log the received data for debugging
-    console.log('Received form data:', { name, email, useCase, rawBody: req.body });
+    console.log('Received form data:', { name, email, useCase });
+    
+    // Get API key from environment variables
+    const airtableToken = process.env.AIRTABLE_PAT;
+    
+    // Check if API key exists
+    if (!airtableToken) {
+      console.error('Airtable PAT not found in environment variables');
+      return res.status(500).json({ error: 'Server configuration error' });
+    }
     
     // Send data to Airtable with exact column names from your Airtable
     const response = await fetch('https://api.airtable.com/v0/appypzFNhpw3sx6YV/tblm2iJo6J4nFsZWD', {
       method: 'POST',
       headers: {
-        'Authorization': 'Bearer pat3mxeEAYtwRZGdU.0c273fdd548452c00084c7c3c586c0ad171dd20ed0caa2c8886288e6f9491c95',
+        'Authorization': `Bearer ${airtableToken}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
