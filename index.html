@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AwkTalk - AI-Powered Awkward Conversation Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        .glow {
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+        }
+        
+        .awkward-highlight {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .awkward-highlight:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 30%;
+            background-color: #fecaca;
+            z-index: -1;
+            transform: rotate(-1deg);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-comment-dots text-red-500 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-gray-900">AwkTalk</span>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-center space-x-4">
+                        <a href="#features" class="text-gray-700 hover:text-red-500 px-3 py-2 rounded-md text-sm font-medium">Features</a>
+                        <a href="#how-it-works" class="text-gray-700 hover:text-red-500 px-3 py-2 rounded-md text-sm font-medium">How It Works</a>
+                        <a href="#waitlist" class="bg-red-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-600 transition duration-300">Join Waitlist</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-red-500 focus:outline-none" id="mobile-menu-button">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="hidden md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#features" class="text-gray-700 hover:text-red-500 block px-3 py-2 rounded-md text-base font-medium">Features</a>
+                <a href="#how-it-works" class="text-gray-700 hover:text-red-500 block px-3 py-2 rounded-md text-base font-medium">How It Works</a>
+                <a href="#waitlist" class="bg-red-500 text-white block px-3 py-2 rounded-md text-base font-medium hover:bg-red-600 transition duration-300">Join Waitlist</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-6">Never Have an <span class="awkward-highlight">Awkward</span> Conversation Again</h1>
+                    <p class="text-xl mb-8 opacity-90">AwkTalk is your real-time conversation assistant that helps you navigate uncomfortable discussions with confidence and grace.</p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#waitlist" class="bg-white text-red-500 hover:bg-gray-100 px-6 py-3 rounded-lg font-semibold text-lg text-center pulse">Join the Waitlist</a>
+                        <a href="#how-it-works" class="border-2 border-white hover:bg-white hover:bg-opacity-10 px-6 py-3 rounded-lg font-semibold text-lg text-center">See How It Works</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative max-w-md">
+                        <div class="absolute -inset-4 bg-red-400 rounded-xl blur opacity-75"></div>
+                        <div class="relative bg-white rounded-xl shadow-xl overflow-hidden">
+                            <div class="bg-gray-100 p-4 flex items-center">
+                                <div class="flex space-x-2">
+                                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                </div>
+                                <div class="ml-4 text-sm text-gray-600">AwkTalk Assistant</div>
+                            </div>
+                            <div class="p-6">
+                                <div class="mb-4">
+                                    <div class="bg-gray-200 rounded-lg p-3 max-w-xs">
+                                        <p class="text-gray-800">I'm not sure how to tell my boss I need more time for this project...</p>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="bg-red-100 rounded-lg p-3 max-w-xs ml-auto">
+                                        <p class="text-red-800 font-medium">Try: "I want to deliver excellent work on this project. Would it be possible to extend the deadline to ensure I can meet all the requirements?"</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="bg-gray-200 rounded-full p-2">
+                                        <i class="fas fa-microphone text-red-500"></i>
+                                    </div>
+                                    <div class="ml-3 text-sm text-gray-500">Listening for awkward moments...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Your AI-Powered <span class="text-red-500">Awkwardness</span> Detector</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">AwkTalk helps you navigate difficult conversations with real-time analysis and suggestions.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card bg-white rounded-xl shadow-md p-8 transition duration-300 hover:shadow-lg">
+                    <div class="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-microphone text-red-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Real-time Awkwardness Detection</h3>
+                    <p class="text-gray-600">Our advanced AI identifies awkward pauses, uncomfortable silences, and cringe-worthy moments in real-time conversations.</p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="feature-card bg-white rounded-xl shadow-md p-8 transition duration-300 hover:shadow-lg">
+                    <div class="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-users text-red-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Social Dynamics Analysis</h3>
+                    <p class="text-gray-600">AwkTalk analyzes power dynamics and social cues to help you understand why a conversation might be getting uncomfortable.</p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="feature-card bg-white rounded-xl shadow-md p-8 transition duration-300 hover:shadow-lg">
+                    <div class="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-brain text-red-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Tone & Sentiment Monitoring</h3>
+                    <p class="text-gray-600">Our AI detects shifts in tone, sentiment, and emotional undercurrents that often lead to awkward situations.</p>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="feature-card bg-white rounded-xl shadow-md p-8 transition duration-300 hover:shadow-lg">
+                    <div class="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-lightbulb text-red-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Rescue Suggestions</h3>
+                    <p class="text-gray-600">Get real-time recommendations for how to gracefully exit, change subjects, or recover from awkward moments.</p>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="feature-card bg-white rounded-xl shadow-md p-8 transition duration-300 hover:shadow-lg">
+                    <div class="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-history text-red-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Awkwardness History</h3>
+                    <p class="text-gray-600">Review past awkward moments to identify patterns and improve your conversation skills over time.</p>
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="feature-card bg-white rounded-xl shadow-md p-8 transition duration-300 hover:shadow-lg">
+                    <div class="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-shield-alt text-red-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Discreet & Private</h3>
+                    <p class="text-gray-600">Your awkward moments stay between you and AwkTalk. All data is encrypted and never shared.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">How <span class="text-red-500">AwkTalk</span> Works</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Simple steps to more confident, less awkward conversations.</p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center mb-16">
+                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-10">
+                    <div class="bg-red-100 text-red-800 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <span class="font-bold text-xl">1</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Start Your Conversation</h3>
+                    <p class="text-gray-600 mb-4">Open the AwkTalk app and begin your conversation as you normally would. Our AI will listen in the background (with your permission) and start analyzing the discussion for awkward moments.</p>
+                    <p class="text-gray-600">Perfect for first dates, networking events, family gatherings, or any situation where conversations might get uncomfortable.</p>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden max-w-md">
+                        <div class="bg-gray-800 p-3 flex items-center">
+                            <div class="flex space-x-2">
+                                <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                                <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+                                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="ml-2 text-xs text-white">AwkTalk - Active Listening</div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center">
+                                    <i class="fas fa-user text-xs"></i>
+                                </div>
+                                <div class="ml-3 text-sm font-medium text-gray-900">You</div>
+                            </div>
+                            <div class="bg-gray-100 rounded-lg p-3 mb-4">
+                                <p class="text-gray-800">So... how about this weather we're having?</p>
+                            </div>
+                            <div class="flex items-center justify-end mb-4">
+                                <div class="text-xs text-gray-500 mr-3">Detecting awkwardness...</div>
+                                <div class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center">
+                                    <i class="fas fa-robot text-xs"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center mb-16">
+                <div class="md:w-1/2 order-2 md:order-1 mb-8 md:mb-0 md:pr-10">
+                    <div class="bg-red-100 text-red-800 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <span class="font-bold text-xl">2</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Receive Real-time Alerts</h3>
+                    <p class="text-gray-600 mb-4">As the conversation progresses, AwkTalk provides discreet notifications about:</p>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2 mb-4">
+                        <li>Awkward silences and pauses</li>
+                        <li>Potentially uncomfortable topics</li>
+                        <li>Tone mismatches between speakers</li>
+                        <li>Opportunities to improve the flow</li>
+                    </ul>
+                    <p class="text-gray-600">These alerts appear subtly on your device without interrupting the conversation.</p>
+                </div>
+                <div class="md:w-1/2 order-1 md:order-2 flex justify-center">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden max-w-md">
+                        <div class="bg-gray-800 p-3 flex items-center">
+                            <div class="flex space-x-2">
+                                <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                                <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+                                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="ml-2 text-xs text-white">AwkTalk - Active Analysis</div>
+                        </div>
+                        <div class="p-6">
+                            <div class="mb-6">
+                                <div class="flex items-center mb-2">
+                                    <div class="bg-yellow-100 rounded-full w-6 h-6 flex items-center justify-center mr-2">
+                                        <i class="fas fa-exclamation text-yellow-500 text-xs"></i>
+                                    </div>
+                                    <div class="text-sm font-medium text-gray-900">Awkward Silence Detected</div>
+                                </div>
+                                <div class="ml-8 text-sm text-gray-600">3.7 second pause after your last statement. Consider asking an open-ended question.</div>
+                            </div>
+                            <div class="mb-6">
+                                <div class="flex items-center mb-2">
+                                    <div class="bg-red-100 rounded-full w-6 h-6 flex items-center justify-center mr-2">
+                                        <i class="fas fa-comment-slash text-red-500 text-xs"></i>
+                                    </div>
+                                    <div class="text-sm font-medium text-gray-900">Topic Warning</div>
+                                </div>
+                                <div class="ml-8 text-sm text-gray-600">Politics detected. 87% of similar conversations became awkward when this topic came up.</div>
+                            </div>
+                            <div class="mb-2">
+                                <div class="flex items-center mb-2">
+                                    <div class="bg-green-100 rounded-full w-6 h-6 flex items-center justify-center mr-2">
+                                        <i class="fas fa-lightbulb text-green-500 text-xs"></i>
+                                    </div>
+                                    <div class="text-sm font-medium text-gray-900">Suggested Topic Change</div>
+                                </div>
+                                <div class="ml-8 text-sm text-gray-600">"That reminds me, have you seen any good movies lately?"</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-10">
+                    <div class="bg-red-100 text-red-800 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <span class="font-bold text-xl">3</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Learn & Improve</h3>
+                    <p class="text-gray-600 mb-4">After your conversation, review the full analysis to understand what made it awkward and how you handled it.</p>
+                    <p class="text-gray-600 mb-4">AwkTalk tracks your progress over time, showing you how your conversation skills are improving in different social situations.</p>
+                    <p class="text-gray-600">Use our practice mode to simulate awkward conversations and build confidence before the real thing.</p>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden max-w-md">
+                        <div class="bg-gray-800 p-3 flex items-center">
+                            <div class="flex space-x-2">
+                                <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                                <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+                                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="ml-2 text-xs text-white">AwkTalk - Conversation Review</div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-6">
+                                <div>
+                                    <div class="text-sm text-gray-500">Conversation with</div>
+                                    <div class="font-medium">Date - Taylor</div>
+                                </div>
+                                <div class="text-sm bg-red-100 text-red-800 px-3 py-1 rounded-full">First Date</div>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex items-center mb-1">
+                                        <div class="text-sm font-medium">Awkwardness Score</div>
+                                        <div class="ml-2 text-sm bg-green-100 text-green-800 px-2 py-0.5 rounded-full">32% (-18%)</div>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full" style="width: 32%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex items-center mb-1">
+                                        <div class="text-sm font-medium">Conversation Flow</div>
+                                        <div class="ml-2 text-sm bg-green-100 text-green-800 px-2 py-0.5 rounded-full">78%</div>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-blue-500 h-2 rounded-full" style="width: 78%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex items-center mb-1">
+                                        <div class="text-sm font-medium">Topic Safety</div>
+                                        <div class="ml-2 text-sm bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full">65%</div>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-yellow-500 h-2 rounded-full" style="width: 65%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-6 pt-6 border-t border-gray-200">
+                                <div class="text-sm font-medium mb-2">Key Improvement Areas</div>
+                                <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                                    <li>Fewer awkward silences than last date</li>
+                                    <li>Avoided controversial topics well</li>
+                                    <li>Could ask more follow-up questions</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Waitlist Section -->
+    <section id="waitlist" class="py-20 gradient-bg text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Join Our Waitlist</h2>
+                <p class="text-xl opacity-90 max-w-2xl mx-auto">Be the first to experience AwkTalk when we launch. Limited spots available for early access.</p>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-xl overflow-hidden max-w-2xl mx-auto">
+                <div class="p-8">
+                    <form id="waitlist-form" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                            <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                            <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500">
+                        </div>
+                        
+                        <div>
+                            <label for="use-case" class="block text-sm font-medium text-gray-700 mb-1">Where do you experience the most awkward conversations?</label>
+                            <select id="use-case" name="use-case" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500">
+                                <option value="">Select an option</option>
+                                <option value="dating">Dating & Relationships</option>
+                                <option value="work">Work & Professional Settings</option>
+                                <option value="family">Family Gatherings</option>
+                                <option value="social">Social Events</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <input id="agree-terms" name="agree-terms" type="checkbox" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded">
+                            <label for="agree-terms" class="ml-2 block text-sm text-gray-700">
+                                I agree to receive updates about AwkTalk's launch and early access opportunities.
+                            </label>
+                        </div>
+                        
+                        <div>
+                            <button type="submit" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+                                <span>Join Waitlist</span>
+                                <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div id="success-message" class="hidden mt-6 p-4 bg-green-50 text-green-700 rounded-lg">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Thank you! You've been added to our waitlist. We'll be in touch soon.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+                <p class="text-xl text-gray-600">Everything you need to know about AwkTalk</p>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- FAQ 1 -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+                        <span class="text-lg font-medium text-gray-900">How does AwkTalk define an "awkward" conversation?</span>
+                        <i class="fas fa-chevron-down text-red-500 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6">
+                        <div class="text-gray-600">
+                            <p class="mb-4">Our AI identifies several markers of awkward conversations including prolonged silences, mismatched tones between speakers, abrupt topic changes, increased speech disfluencies (like "um" and "uh"), and certain sensitive topics that commonly lead to discomfort.</p>
+                            <p>We've trained our models on thousands of real conversations to recognize these patterns accurately.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FAQ 4 -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+                        <span class="text-lg font-medium text-gray-900">When will AwkTalk be available?</span>
+                        <i class="fas fa-chevron-down text-red-500 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6">
+                        <div class="text-gray-600">
+                            <p class="mb-4">We're currently in private beta testing with plans for a limited public release in Q1 2024. Join our waitlist to get early access opportunities.</p>
+                            <p>The full public launch is scheduled for mid-2024, with additional features rolling out throughout the year.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FAQ 5 -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+                        <span class="text-lg font-medium text-gray-900">Will there be a free version?</span>
+                        <i class="fas fa-chevron-down text-red-500 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6">
+                        <div class="text-gray-600">
+                            <p class="mb-4">Yes! We plan to offer a free tier with basic awkwardness detection and limited suggestions per week. This will allow users to experience the core functionality.</p>
+                            <p>Premium plans will unlock unlimited usage, advanced analytics, conversation simulations, and personalized coaching to reduce your awkward moments over time.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-comment-dots text-red-400 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold">AwkTalk</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">Your AI-powered assistant for navigating awkward conversations with confidence.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-4">Product</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#features" class="text-gray-400 hover:text-white">Features</a></li>
+                        <li><a href="#how-it-works" class="text-gray-400 hover:text-white">How It Works</a></li>
+                        <li><a href="#waitlist" class="text-gray-400 hover:text-white">Waitlist</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-4">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="mailto:harshitvarora@gmail.com" class="text-gray-400 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-gray-800">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm">© 2023 AwkTalk. All rights reserved.</p>
+                    <div class="mt-4 md:mt-0 flex space-x-6">
+                        <a href="#privacy-policy" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+                        <a href="#terms-of-service" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
+                        <a href="#cookie-policy" class="text-gray-400 hover:text-white text-sm">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Privacy Policy Modal (Hidden by default) -->
+    <div id="privacy-policy" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-lg max-w-3xl max-h-[80vh] overflow-y-auto p-8 m-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Privacy Policy</h2>
+                <button class="text-gray-500 hover:text-gray-700 focus:outline-none modal-close">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="prose prose-sm text-gray-600">
+                <p><strong>Last Updated: January 1, 2023</strong></p>
+                
+                <h3>1. Introduction</h3>
+                <p>Welcome to AwkTalk. We respect your privacy and are committed to protecting your personal data. This privacy policy will inform you about how we look after your personal data when you use our application and tell you about your privacy rights.</p>
+                
+                <h3>2. Data We Collect</h3>
+                <p>We may collect and process the following data:</p>
+                <ul>
+                    <li>Identity Data: name, username</li>
+                    <li>Contact Data: email address</li>
+                    <li>Technical Data: device information, IP address</li>
+                    <li>Usage Data: how you use our application</li>
+                    <li>Audio Data: conversation recordings (only with explicit permission)</li>
+                </ul>
+                
+                <h3>3. How We Use Your Data</h3>
+                <p>We use your data to:</p>
+                <ul>
+                    <li>Provide and improve our services</li>
+                    <li>Personalize your experience</li>
+                    <li>Communicate with you</li>
+                    <li>Train our AI models (with anonymized data only)</li>
+                </ul>
+                
+                <h3>4. Data Security</h3>
+                <p>We have implemented appropriate security measures to prevent your personal data from being accidentally lost, used, or accessed in an unauthorized way. All conversation data is encrypted both in transit and at rest.</p>
+                
+                <h3>5. Data Retention</h3>
+                <p>We will only retain your personal data for as long as necessary to fulfill the purposes we collected it for. You can request deletion of your data at any time.</p>
+                
+                <h3>6. Your Rights</h3>
+                <p>Under certain circumstances, you have rights under data protection laws in relation to your personal data, including the right to access, correct, erase, restrict, transfer, or object to processing.</p>
+                
+                <h3>7. Contact Us</h3>
+                <p>If you have any questions about this privacy policy or our privacy practices, please contact us at: <a href="mailto:harshitvarora@gmail.com">harshitvarora@gmail.com</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms of Service Modal (Hidden by default) -->
+    <div id="terms-of-service" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-lg max-w-3xl max-h-[80vh] overflow-y-auto p-8 m-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Terms of Service</h2>
+                <button class="text-gray-500 hover:text-gray-700 focus:outline-none modal-close">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="prose prose-sm text-gray-600">
+                <p><strong>Last Updated: January 1, 2023</strong></p>
+                
+                <h3>1. Acceptance of Terms</h3>
+                <p>By accessing or using AwkTalk, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our application.</p>
+                
+                <h3>2. Description of Service</h3>
+                <p>AwkTalk is an AI-powered conversation assistant that helps users navigate potentially awkward conversations by providing real-time analysis and suggestions.</p>
+                
+                <h3>3. User Accounts</h3>
+                <p>You may be required to create an account to use certain features of our application. You are responsible for maintaining the confidentiality of your account information and for all activities that occur under your account.</p>
+                
+                <h3>4. User Conduct</h3>
+                <p>You agree not to use AwkTalk to:</p>
+                <ul>
+                    <li>Violate any applicable laws or regulations</li>
+                    <li>Infringe upon the rights of others</li>
+                    <li>Record conversations without the consent of all parties (where required by law)</li>
+                    <li>Attempt to gain unauthorized access to our systems</li>
+                </ul>
+                
+                <h3>5. Intellectual Property</h3>
+                <p>All content, features, and functionality of AwkTalk are owned by us or our licensors and are protected by copyright, trademark, and other intellectual property laws.</p>
+                
+                <h3>6. Disclaimer of Warranties</h3>
+                <p>AwkTalk is provided "as is" without warranties of any kind, either express or implied. We do not guarantee that our service will be error-free or uninterrupted.</p>
+                
+                <h3>7. Limitation of Liability</h3>
+                <p>We shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use AwkTalk.</p>
+                
+                <h3>8. Changes to Terms</h3>
+                <p>We may revise these Terms of Service at any time. By continuing to use AwkTalk after such changes, you agree to be bound by the revised terms.</p>
+                
+                <h3>9. Contact Us</h3>
+                <p>If you have any questions about these Terms, please contact us at: <a href="mailto:harshitvarora@gmail.com">harshitvarora@gmail.com</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie Policy Modal (Hidden by default) -->
+    <div id="cookie-policy" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-lg max-w-3xl max-h-[80vh] overflow-y-auto p-8 m-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Cookie Policy</h2>
+                <button class="text-gray-500 hover:text-gray-700 focus:outline-none modal-close">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="prose prose-sm text-gray-600">
+                <p><strong>Last Updated: January 1, 2023</strong></p>
+                
+                <h3>1. What Are Cookies</h3>
+                <p>Cookies are small text files that are placed on your device when you visit a website or use an application. They are widely used to make websites and applications work more efficiently and provide information to the owners.</p>
+                
+                <h3>2. How We Use Cookies</h3>
+                <p>We use cookies to:</p>
+                <ul>
+                    <li>Understand how you use our application</li>
+                    <li>Remember your preferences</li>
+                    <li>Improve your experience</li>
+                    <li>Provide certain features and functionality</li>
+                </ul>
+                
+                <h3>3. Types of Cookies We Use</h3>
+                <p><strong>Essential Cookies:</strong> These are necessary for the application to function properly.</p>
+                <p><strong>Preference Cookies:</strong> These remember your settings and preferences.</p>
+                <p><strong>Analytics Cookies:</strong> These help us understand how you use our application.</p>
+                
+                <h3>4. Managing Cookies</h3>
+                <p>Most web browsers allow you to control cookies through their settings. You can usually find these settings in the "options" or "preferences" menu of your browser.</p>
+                
+                <h3>5. Changes to This Policy</h3>
+                <p>We may update our Cookie Policy from time to time. We will notify you of any changes by posting the new policy on this page.</p>
+                
+                <h3>6. Contact Us</h3>
+                <p>If you have any questions about our Cookie Policy, please contact us at: <a href="mailto:harshitvarora@gmail.com">harshitvarora@gmail.com</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // FAQ toggle functionality
+        document.querySelectorAll('.faq-toggle').forEach(button => {
+            button.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const icon = this.querySelector('i');
+                
+                // Toggle content
+                content.classList.toggle('hidden');
+                
+                // Rotate icon
+                if (content.classList.contains('hidden')) {
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+        // Updated Waitlist form submission
+        document.getElementById('waitlist-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const useCase = formData.get('use-case');
+            const agreeTerms = formData.get('agree-terms') ? 'Yes' : 'No';
+            
+            // Show loading state
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.innerHTML;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+            submitButton.disabled = true;
+            
+            // Send to Google Sheets using their form endpoint
+            fetch('https://script.google.com/macros/s/AKfycbyyu6ZnuZAPy0tmuHcIDAfNHIW3b72aGbBifhGuFHFidvyYQ9m8VBXaWk7ED1bxn05kbg/exec', {
+                method: 'POST',
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    useCase: useCase,
+                    agreeTerms: agreeTerms,
+                    timestamp: new Date().toISOString()
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Show success message
+                document.getElementById('success-message').classList.remove('hidden');
+                this.reset();
+                
+                // Scroll to success message
+                document.getElementById('success-message').scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Show error message
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'mt-6 p-4 bg-red-50 text-red-700 rounded-lg';
+                errorMessage.innerHTML = `
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+                        <span>There was an error submitting your information. Please try again later.</span>
+                    </div>
+                `;
+                this.parentNode.appendChild(errorMessage);
+            })
+            .finally(() => {
+                // Reset button state
+                submitButton.innerHTML = originalButtonText;
+                submitButton.disabled = false;
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ 
+                        behavior: 'smooth' 
+                    });
+                }
+            });
+        });
+
+        // Modal functionality for policy documents
+        document.querySelectorAll('a[href^="#privacy-policy"], a[href^="#terms-of-service"], a[href^="#cookie-policy"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const modalId = this.getAttribute('href');
+                document.querySelector(modalId).classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        document.querySelectorAll('.modal-close').forEach(button => {
+            button.addEventListener('click', function() {
+                this.closest('[id^="privacy-policy"], [id^="terms-of-service"], [id^="cookie-policy"]').classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+        });
+    </script>
+</body>
+</html>
