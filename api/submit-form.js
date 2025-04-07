@@ -8,6 +8,9 @@ export default async function handler(req, res) {
     // Get form data from request body
     const { name, email, useCase } = req.body;
     
+    // Log the received data for debugging
+    console.log('Received form data:', { name, email, useCase });
+    
     // Send data to Airtable
     const response = await fetch('https://api.airtable.com/v0/appypzFNhpw3sx6YV/tblm2iJo6J4nFsZWD', {
       method: 'POST',
@@ -19,7 +22,7 @@ export default async function handler(req, res) {
         fields: {
           Name: name,
           Email: email,
-          'Use Case': useCase,
+          'Use Case': useCase || 'Not specified',
           'Submission Date': new Date().toISOString()
         }
       })
@@ -28,13 +31,17 @@ export default async function handler(req, res) {
     // Check if Airtable request was successful
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(JSON.stringify(errorData));
+      console.error('Airtable error:', errorData);
+      return res.status(500).json({ error: 'Failed to submit to Airtable', details: errorData });
     }
+    
+    const data = await response.json();
+    console.log('Airtable success response:', data);
     
     // Return success response
     return res.status(200).json({ success: true });
   } catch (error) {
-    console.error('Error submitting to Airtable:', error);
-    return res.status(500).json({ error: 'Failed to submit form' });
+    console.error('Error in API route:', error.message);
+    return res.status(500).json({ error: 'Failed to submit form', message: error.message });
   }
 } 

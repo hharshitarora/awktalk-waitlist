@@ -714,6 +714,7 @@
         document.getElementById('waitlist-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
+            // Get form data
             const formData = new FormData(this);
             const name = formData.get('name');
             const email = formData.get('email');
@@ -745,47 +746,98 @@
             submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
             submitButton.disabled = true;
             
-            // Send to our secure API endpoint
-            fetch('/api/submit-form', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    name: name,
-                    email: email,
-                    useCase: useCase
+            // Check if we're running locally or on a server
+            const isLocalDevelopment = window.location.protocol === 'file:';
+
+            if (isLocalDevelopment) {
+                // For local development, send directly to Airtable
+                fetch('https://api.airtable.com/v0/appypzFNhpw3sx6YV/tblm2iJo6J4nFsZWD', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer pat3mxeEAYtwRZGdU.0c273fdd548452c00084c7c3c586c0ad171dd20ed0caa2c8886288e6f9491c95',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        fields: {
+                            Name: name,
+                            Email: email,
+                            'Use Case': useCase,
+                            'Submission Date': new Date().toISOString()
+                        }
+                    })
                 })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Show success message
-                document.getElementById('success-message').classList.remove('hidden');
-                this.reset();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                // Show error message
-                const errorMessage = document.createElement('div');
-                errorMessage.className = 'mt-6 p-4 bg-red-50 text-red-700 rounded-lg';
-                errorMessage.innerHTML = `
-                    <div class="flex items-center">
-                        <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
-                        <span>There was an error submitting your information. Please try again later.</span>
-                    </div>
-                `;
-                this.parentNode.appendChild(errorMessage);
-            })
-            .finally(() => {
-                // Reset button state
-                submitButton.innerHTML = originalButtonText;
-                submitButton.disabled = false;
-            });
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Show success message
+                    document.getElementById('success-message').classList.remove('hidden');
+                    this.reset();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Show error message
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'mt-6 p-4 bg-red-50 text-red-700 rounded-lg';
+                    errorMessage.innerHTML = `
+                        <div class="flex items-center">
+                            <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+                            <span>There was an error submitting your information. Please try again later.</span>
+                        </div>
+                    `;
+                    this.parentNode.appendChild(errorMessage);
+                })
+                .finally(() => {
+                    // Reset button state
+                    submitButton.innerHTML = originalButtonText;
+                    submitButton.disabled = false;
+                });
+            } else {
+                // For production, use the API route
+                fetch('/api/submit-form', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        useCase: useCase
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Show success message
+                    document.getElementById('success-message').classList.remove('hidden');
+                    this.reset();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Show error message
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'mt-6 p-4 bg-red-50 text-red-700 rounded-lg';
+                    errorMessage.innerHTML = `
+                        <div class="flex items-center">
+                            <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+                            <span>There was an error submitting your information. Please try again later.</span>
+                        </div>
+                    `;
+                    this.parentNode.appendChild(errorMessage);
+                })
+                .finally(() => {
+                    // Reset button state
+                    submitButton.innerHTML = originalButtonText;
+                    submitButton.disabled = false;
+                });
+            }
         });
 
         // Smooth scrolling for anchor links
