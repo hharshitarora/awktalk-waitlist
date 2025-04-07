@@ -761,8 +761,7 @@
                         fields: {
                             'Full Name': name,
                             'Email': email,
-                            'Use Case': useCase,
-                            'Submission Date': new Date().toISOString()
+                            'Use Case': useCase
                         }
                     })
                 })
@@ -803,12 +802,9 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        fields: {
-                            'Full Name': name,
-                            'Email': email,
-                            'Use Case': useCase,
-                            'Submission Date': new Date().toISOString()
-                        }
+                        name: name,
+                        email: email,
+                        useCase: useCase
                     })
                 })
                 .then(response => {
