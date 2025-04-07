@@ -424,7 +424,7 @@
                         </div>
                         
                         <div class="flex items-center">
-                            <input id="agree-terms" name="agree-terms" type="checkbox" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded">
+                            <input id="agree-terms" name="agree-terms" type="checkbox" required class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded">
                             <label for="agree-terms" class="ml-2 block text-sm text-gray-700">
                                 I agree to receive updates about AwkTalk's launch and early access opportunities.
                             </label>
@@ -709,7 +709,8 @@
             });
         });
 
-        // Updated Waitlist form submission
+        // Replace the form submission code with this updated version:
+
         document.getElementById('waitlist-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -717,7 +718,26 @@
             const name = formData.get('name');
             const email = formData.get('email');
             const useCase = formData.get('use-case');
-            const agreeTerms = formData.get('agree-terms') ? 'Yes' : 'No';
+            
+            // Check if terms are agreed to
+            if (!formData.get('agree-terms')) {
+                // Create error message for terms
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'mt-6 p-4 bg-red-50 text-red-700 rounded-lg';
+                errorMessage.innerHTML = `
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+                        <span>Please agree to the terms to join the waitlist.</span>
+                    </div>
+                `;
+                // Remove any existing error messages
+                const existingError = this.parentNode.querySelector('.bg-red-50');
+                if (existingError) {
+                    existingError.remove();
+                }
+                this.parentNode.appendChild(errorMessage);
+                return;
+            }
             
             // Show loading state
             const submitButton = this.querySelector('button[type="submit"]');
@@ -725,20 +745,17 @@
             submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
             submitButton.disabled = true;
             
-            // Send to FormSubmit.co instead of Google Sheets
-            fetch('https://formsubmit.co/ajax/harshitvarora@gmail.com', {
+            // Send to our secure API endpoint
+            fetch('/api/submit-form', {
                 method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify({
                     name: name,
                     email: email,
-                    useCase: useCase,
-                    agreeTerms: agreeTerms,
-                    timestamp: new Date().toISOString()
-                }),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
+                    useCase: useCase
+                })
             })
             .then(response => {
                 if (!response.ok) {
@@ -750,11 +767,6 @@
                 // Show success message
                 document.getElementById('success-message').classList.remove('hidden');
                 this.reset();
-                
-                // Scroll to success message
-                document.getElementById('success-message').scrollIntoView({ 
-                    behavior: 'smooth' 
-                });
             })
             .catch(error => {
                 console.error('Error:', error);
